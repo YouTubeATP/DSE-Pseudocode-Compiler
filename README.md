@@ -22,3 +22,32 @@ The compiler searches for the highest index for each array referenced, and initi
 ```
 X = [None] * (highest_index + 1)
 ```
+The compromise is X[0] will always return `None`.
+
+## Unsupported features
+Type conversion of inputs **will not be supported**. You have to manually convert it:
+```
+    Input A, B
+    Output A * B
+```
+to
+```
+    Input A, B
+    Output int(A) * int(B)
+```
+
+Plain language used in pseudocode **will not be supported**. Convert them to Python automatically:
+```
+    X <-- 2
+    Y <-- 4
+    Output the square root of Y
+    Output the integral part of X / Y
+```
+to
+```
+    from math import sqrt
+    X <-- 2
+    Y <-- 4
+    Output sqrt(X)
+    Output X // Y
+```
