@@ -8,7 +8,7 @@ All styles and capitalization found throughout various years of past papers.
 - Variable assignment
 - Comparison operators
 - Logical operators
-- `if`/ `else`/ `else if` statements
+- `if`/ `else`/ `else if` statements (with or without `then`)
 - `for` loops
 - `while` loops
 - `repeat... until` loops
@@ -22,7 +22,7 @@ The compiler searches for the highest index for each array referenced, and initi
 ```
 X = [None] * (highest_index + 1)
 ```
-The compromise is X[0] will always return `None`.
+The compromise is `X[0]` will always return `None`.
 
 ## Unsupported features
 Type conversion of inputs **will not be supported**. You have to manually convert it:
