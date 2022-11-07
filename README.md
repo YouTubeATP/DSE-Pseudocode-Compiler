@@ -36,7 +36,7 @@ to
     Output int(A) * int(B)
 ```
 
-Plain language used in pseudocode **will not be supported**. Convert them to Python automatically:
+Plain language used in pseudocode **will not be supported**. Convert them to Python manually:
 ```
     X <-- 2
     Y <-- 4
