@@ -148,32 +148,25 @@ def compile(pseudocode: str) -> str:
         
         return line
     
-    def replace_repeat_until(line) -> str:
+    def replace_repeat_until(line: str) -> str:
         if line.lstrip().startswith(("Until", "until", "UNTIL")):
-            return ""
+            indentation_level = len(line) - len(line.lstrip())
+            
+            tokens = line.split()[1:] # ["Until", "A", "<", "B"] --> ["A", "<", "B"]
+            res = ""
+            res += " " * (indentation_level + 4) + "if " + " ".join(tokens) + ":\n"
+            res += " " * (indentation_level + 8) + "break"
+            
+            return res
         
         if line.lstrip().startswith(("Repeat", "repeat", "REPEAT")):
-            global repeat_statement_no
-            line = line.replace("Repeat", "while not {placeholder" + str(repeat_statement_no) + "}:")
-            line = line.replace("REPEAT", "while not {placeholder" + str(repeat_statement_no) + "}:")
-            line = line.replace("repeat", "while not {placeholder" + str(repeat_statement_no) + "}:")
-            
-            repeat_statement_no += 1
+            line = line.replace("Repeat", "while True:")
+            line = line.replace("REPEAT", "while True:")
+            line = line.replace("repeat", "while True:")
+        
+            return line
         
         return line
-                    
-    def record_repeat_until(line) -> None:
-        global repeat_record_no
-        global repeat_ends
-        if line.lstrip().startswith(("Until", "until", "UNTIL")):
-            repeat_ends[str(repeat_record_no)] = " ".join(line.split()[1:]) # "Until X < 3" --> "X < 3", put in repeat_ends
-            repeat_record_no += 1
-            
-    def replace_repeat_until_placeholder(pseudocode) -> str:
-        global repeat_ends
-        for key, value in zip(repeat_ends.keys(), repeat_ends.values()):
-            pseudocode = pseudocode.replace("{placeholder" + str(key) + "}", f"({value})")
-        return pseudocode
             
     def process_array_indices(line) -> str:
         x = re.findall("[a-zA-Z0-9_]+\[[0-9]+\]", line)
@@ -204,7 +197,6 @@ def compile(pseudocode: str) -> str:
         return init_lines
     
     def process_line(line: str):
-        record_repeat_until(line)
         new_line = convert_if_statements(line)
         new_line = convert_simple_loops(new_line)
         new_line = replace_repeat_until(new_line)
@@ -225,7 +217,6 @@ def compile(pseudocode: str) -> str:
     for line in pseudocode.splitlines():
         new_pseudocode += process_line(line)
     
-    new_pseudocode = replace_repeat_until_placeholder(new_pseudocode)
     new_pseudocode = initialize_arrays() + new_pseudocode
     
     return new_pseudocode
