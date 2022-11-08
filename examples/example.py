@@ -4,7 +4,6 @@ from compiler import compile
 import os
 
 for file in os.listdir(os.path.relpath("./examples")):
-    print(file)
     if file.endswith(".pc.txt"):
         with open(os.path.relpath(f"./examples/{file}"), "r") as f:
             compiled_code = compile(f.read())
