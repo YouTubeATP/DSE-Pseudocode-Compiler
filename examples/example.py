@@ -1,9 +1,9 @@
 # Convert *.pc.txt to *.py
+
 from compiler import compile
 import os
 
 for file in os.listdir(os.path.abspath("./examples")):
-    print(file)
     if file.endswith(".pc.txt"):
         with open(os.path.abspath(f"./examples/{file}"), "r") as f:
             compiled_code = compile(f.read())
