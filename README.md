@@ -40,7 +40,7 @@ Plain language used in pseudocode **will not be supported**. Convert them to Pyt
 ```
 X <-- 2
 Y <-- 4
-Output the square root of Y
+Output the square root of X
 Output the integral part of X / Y
 ```
 to
